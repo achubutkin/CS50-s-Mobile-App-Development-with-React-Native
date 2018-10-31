@@ -7,8 +7,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
-  appContainer: { 
-    paddingTop: Constants.statusBarHeight 
+  appContainer: {
+    paddingTop: Constants.statusBarHeight
+  },
+  fill: {
+    flex: 1
   }
 });
 
@@ -59,11 +62,11 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View style={styles.appContainer}>
+      <View style={[styles.appContainer, styles.fill]}>
         <Text>Todo count: {this.state.todos.length}</Text>
         <Text>Unchecked todos: {this.state.todos.filter(todo => !todo.checked).length}</Text>
         <Button onPress={() => this.addTodo()} title="Add TODO" />
-        <ScrollView>
+        <ScrollView style={styles.fill}>
           {this.state.todos.map(todo => (
             <Todo
               key={todo.id}
