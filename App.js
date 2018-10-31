@@ -1,7 +1,6 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { StyleSheet, Text, Button, ScrollView, View } from 'react-native';
 
-import "./styles.css";
 const styles = {
   fontFamily: "sans-serif",
   textAlign: "center"
@@ -10,18 +9,20 @@ const styles = {
 let id = 0;
 
 const Todo = props => (
-  <li>
+  <View>
     <input
       type="checkbox"
       checked={props.todo.checked}
       onChange={props.onToggle}
     />
-    <button onClick={props.onDelete}>delete</button>
-    <span>{props.todo.text}</span>
-  </li>
+    <Button onClick={props.onDelete}>
+      <Text>delete</Text>
+    </Button>
+    <Text>{props.todo.text}</Text>
+  </View>
 );
 
-class App extends React.Component {
+export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -57,14 +58,15 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <div>Todo count: {this.state.todos.length}</div>
-        <div>
-          Unchecked todos:{" "}
-          {this.state.todos.filter(todo => !todo.checked).length}
-        </div>
-        <button onClick={() => this.addTodo()}>Add TODO</button>
-        <ul>
+      <View>
+        <Text>Todo count: {this.state.todos.length}</Text>
+        <View>
+          <Text>Unchecked todos: {this.state.todos.filter(todo => !todo.checked).length}</Text>
+        </View>
+        <Button onClick={() => this.addTodo()}>
+          <Text>Add TODO</Text>
+        </Button>
+        <ScrollView>
           {this.state.todos.map(todo => (
             <Todo
               onToggle={() => this.toggleTodo(todo.id)}
@@ -72,11 +74,8 @@ class App extends React.Component {
               todo={todo}
             />
           ))}
-        </ul>
-      </div>
-    );
+        </ScrollView>
+      </View>
+    )
   }
 }
-
-const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
