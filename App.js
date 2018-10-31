@@ -1,23 +1,11 @@
 import React from "react";
 import { StyleSheet, Text, Button, ScrollView, View } from 'react-native';
 
-const styles = {
-  fontFamily: "sans-serif",
-  textAlign: "center"
-};
-
 let id = 0;
 
 const Todo = props => (
   <View>
-    <input
-      type="checkbox"
-      checked={props.todo.checked}
-      onChange={props.onToggle}
-    />
-    <Button onClick={props.onDelete}>
-      <Text>delete</Text>
-    </Button>
+    <Button onPress={props.onDelete} title="delete" />
     <Text>{props.todo.text}</Text>
   </View>
 );
@@ -31,10 +19,11 @@ export default class App extends React.Component {
   }
 
   addTodo() {
-    let text = prompt("Please, write Todo: ");
+    id++;
+    let text = `Todo number ${id}`;
     if (text) {
       this.setState({
-        todos: [...this.state.todos, { id: id++, text: text, checked: false }]
+        todos: [...this.state.todos, { id: id, text: text, checked: false }]
       });
     }
   }
@@ -60,12 +49,8 @@ export default class App extends React.Component {
     return (
       <View>
         <Text>Todo count: {this.state.todos.length}</Text>
-        <View>
-          <Text>Unchecked todos: {this.state.todos.filter(todo => !todo.checked).length}</Text>
-        </View>
-        <Button onClick={() => this.addTodo()}>
-          <Text>Add TODO</Text>
-        </Button>
+        <Text>Unchecked todos: {this.state.todos.filter(todo => !todo.checked).length}</Text>
+        <Button onPress={() => this.addTodo()} title="Add TODO" />
         <ScrollView>
           {this.state.todos.map(todo => (
             <Todo
@@ -76,6 +61,11 @@ export default class App extends React.Component {
           ))}
         </ScrollView>
       </View>
-    )
+    );
   }
 }
+
+const styles = {
+  fontFamily: "sans-serif",
+  textAlign: "center"
+};
