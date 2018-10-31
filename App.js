@@ -1,10 +1,21 @@
 import React from "react";
 import { StyleSheet, Text, Button, ScrollView, View } from 'react-native';
+import { Constants } from 'expo';
+
+const styles = StyleSheet.create({
+  todoContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  appContainer: { 
+    paddingTop: Constants.statusBarHeight 
+  }
+});
 
 let id = 0;
 
 const Todo = props => (
-  <View>
+  <View style={styles.todoContainer}>
     <Button onPress={props.onDelete} title="delete" />
     <Text>{props.todo.text}</Text>
   </View>
@@ -47,13 +58,14 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.appContainer}>
         <Text>Todo count: {this.state.todos.length}</Text>
         <Text>Unchecked todos: {this.state.todos.filter(todo => !todo.checked).length}</Text>
         <Button onPress={() => this.addTodo()} title="Add TODO" />
         <ScrollView>
           {this.state.todos.map(todo => (
             <Todo
+              key={todo.id}
               onToggle={() => this.toggleTodo(todo.id)}
               onDelete={() => this.removeTodo(todo.id)}
               todo={todo}
@@ -64,8 +76,3 @@ export default class App extends React.Component {
     );
   }
 }
-
-const styles = {
-  fontFamily: "sans-serif",
-  textAlign: "center"
-};
