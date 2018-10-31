@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, Button, ScrollView, View } from 'react-native';
+import { StyleSheet, Text, Button, ScrollView, View, Switch } from 'react-native';
 import { Constants } from 'expo';
 
 const styles = StyleSheet.create({
@@ -16,6 +16,7 @@ let id = 0;
 
 const Todo = props => (
   <View style={styles.todoContainer}>
+    <Switch value={props.todo.checked} onValueChange={props.onToggle} />
     <Button onPress={props.onDelete} title="delete" />
     <Text>{props.todo.text}</Text>
   </View>
